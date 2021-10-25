@@ -22,7 +22,7 @@ resource "azurerm_lb" "lb" {
     ]
     content {
       name                          = frontend_ip_configuration.value.name
-      subnet_id                     = var.subnets[frontend_ip_configuration.value.subnet_id].subnets.id
+      subnet_id                     = var.subnets[frontend_ip_configuration.value.subnet_id].subnet.id
       private_ip_address            = frontend_ip_configuration.value.private_ip_address
       private_ip_address_allocation = frontend_ip_configuration.value.private_ip_address_allocation
       private_ip_address_version    = frontend_ip_configuration.value.private_ip_address_version
