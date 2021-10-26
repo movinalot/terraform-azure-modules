@@ -23,3 +23,7 @@ variable "network_interfaces" {
 variable "network_security_groups" {
   description = "Azure Virtual Network Security Groups"
 }
+
+variable "network_security_rules" {
+  description = "Azure Virtual Network Security Rules"
+}

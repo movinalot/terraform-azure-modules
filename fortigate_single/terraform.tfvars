@@ -23,7 +23,58 @@ network_interfaces = {
   "nic-fortigate_2" = { name = "nic-fortigate_2", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "internal", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "4", ip_configuration_public_ip_address_id = null},
 }
 
-  network_security_groups = {
-    "nsg-public"  = { name = "nsg-public" },
-    "nsg-private" = { name = "nsg-private" }
+network_security_groups = {
+  "nsg-public"  = { name = "nsg-public" },
+  "nsg-private" = { name = "nsg-private" }
+}
+
+network_security_rules = {
+  "nsr-public-ingress"  = {
+    name                        = "nsr-public-ingress"
+    priority                    = 1001
+    direction                   = "Inbound"
+    access                      = "Allow"
+    protocol                    = "Tcp"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    network_security_group_name = "nsg-public"
+  },
+  "nsr-public-egress"  = {
+    name                        = "nsr-public-egress"
+    priority                    = 1002
+    direction                   = "Outbound"
+    access                      = "Allow"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    network_security_group_name = "nsg-public"
+  },
+  "nsr-private-ingress"  = {
+    name                        = "nsr-private-ingress"
+    priority                    = 1003
+    direction                   = "Inbound"
+    access                      = "Allow"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    network_security_group_name = "nsg-private"
+  },
+  "nsr-private-egress"  = {
+    name                        = "nsr-private-egress"
+    priority                    = 1004
+    direction                   = "Outbound"
+    access                      = "Allow"
+    protocol                    = "*"
+    source_port_range           = "*"
+    destination_port_range      = "*"
+    source_address_prefix       = "*"
+    destination_address_prefix  = "*"
+    network_security_group_name = "nsg-private"
   }
+}
