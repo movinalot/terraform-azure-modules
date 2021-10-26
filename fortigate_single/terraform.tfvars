@@ -18,13 +18,34 @@ subnets = {
     "protected" = { name = "protected", vnet_name = "vnet-fortigate", address_prefixes = ["10.130.2.0/24"] }
 }
 
+route_tables = {
+  "rt-protected"  = { name = "rt-protected" }
+}
+
+routes = {
+  "r-default" = {
+    name                   = "r-default"
+    address_prefix         = "0.0.0.0/0"
+    next_hop_in_ip_address = "nic-fortigate_2"
+    next_hop_type          = "VirtualAppliance"
+    route_table_name       = "rt-protected"
+  }
+}
+
+subnet_route_table_associations = {
+  "subnet-protected" = {
+    subnet_id      = "protected"
+    route_table_id = "rt-protected"
+  }
+}
+
 network_interfaces = {
-  "nic-fortigate_1" = { name = "nic-fortigate_1", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "external", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "4", ip_configuration_public_ip_address_id = "ip-fortigate"},
-  "nic-fortigate_2" = { name = "nic-fortigate_2", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "internal", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "4", ip_configuration_public_ip_address_id = null},
+  "nic-fortigate_1" = { name = "nic-fortigate_1", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "external", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "4", ip_configuration_public_ip_address_id = "ip-fortigate"}
+  "nic-fortigate_2" = { name = "nic-fortigate_2", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "internal", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "4", ip_configuration_public_ip_address_id = null}
 }
 
 network_security_groups = {
-  "nsg-public"  = { name = "nsg-public" },
+  "nsg-public"  = { name = "nsg-public" }
   "nsg-private" = { name = "nsg-private" }
 }
 
