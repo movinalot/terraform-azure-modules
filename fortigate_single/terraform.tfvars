@@ -99,3 +99,15 @@ network_security_rules = {
     network_security_group_name = "nsg-private"
   }
 }
+
+network_interface_security_group_associations = {
+  "nic-fortigate_1-nsg-public" = {
+    network_interface_id  = "nic-fortigate_1"
+    network_security_group_id = "nsg-public"
+  },
+  "nic-fortigate_2-nsg-public" = {
+    network_interface_id  = "nic-fortigate_2"
+    network_security_group_id = "nsg-private"
+  },
+
+}

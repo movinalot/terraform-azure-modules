@@ -36,3 +36,5 @@ variable "network_security_rules" {
 }
 
 variable "subnet_route_table_associations" {}
+
+variable "network_interface_security_group_associations" {}
