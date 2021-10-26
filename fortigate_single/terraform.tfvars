@@ -39,6 +39,15 @@ subnet_route_table_associations = {
   }
 }
 
+storage_accounts = {
+  "st-diag" = {
+    name                     = "stdiag"
+    account_replication_type = "LRS"
+    account_tier             = "Standard"
+  }
+
+}
+
 network_interfaces = {
   "nic-fortigate_1" = { name = "nic-fortigate_1", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "external", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "4", ip_configuration_public_ip_address_id = "ip-fortigate"}
   "nic-fortigate_2" = { name = "nic-fortigate_2", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "internal", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "4", ip_configuration_public_ip_address_id = null}
