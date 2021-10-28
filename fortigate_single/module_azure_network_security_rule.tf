@@ -14,6 +14,10 @@ module "module_azure_network_security_rule" {
   source_address_prefix       = each.value.source_address_prefix     
   destination_address_prefix  = each.value.destination_address_prefix
   network_security_group_name = each.value.network_security_group_name
+
+  depends_on = [
+    module.module_azure_network_security_group
+  ]
 }
 
 output "network_security_rules" {

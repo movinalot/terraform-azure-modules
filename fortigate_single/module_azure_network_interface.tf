@@ -14,10 +14,6 @@ module "module_azure_network_interface" {
   ip_configuration_private_ip_address_allocation = each.value.ip_configuration_private_ip_address_allocation
   ip_configuration_private_ip_address            = cidrhost(module.module_azure_subnet[each.value.ip_configuration_subnet_id].subnet.address_prefixes[0], each.value.ip_configuration_private_ip_address_offset)
   ip_configuration_public_ip_address_id          = each.value.ip_configuration_public_ip_address_id == null ? null : module.module_azure_public_ip[each.value.ip_configuration_public_ip_address_id].public_ip.id
-
-  depends_on = [
-    module.module_azure_subnet
-  ]
 }
 
 output "network_interfaces" {
