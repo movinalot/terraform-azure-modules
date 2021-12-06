@@ -11,7 +11,7 @@ module "module_azure_storage_account" {
 }
 
 output "storage_accounts" {
-  value = module.module_azure_storage_account[*]
+  value     = module.module_azure_storage_account[*]
   sensitive = true
 }
 

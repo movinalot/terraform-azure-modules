@@ -1,13 +1,20 @@
 resource "azurerm_virtual_machine" "virtual_machine" {
 
-  resource_group_name = var.resource_group_name
-  location            = var.resource_group_location
   name                = var.name
+  location            = var.resource_group_location
+  resource_group_name = var.resource_group_name
 
   network_interface_ids        = var.network_interface_ids
   primary_network_interface_id = var.primary_network_interface_id
   vm_size                      = var.vm_size
 
+  delete_os_disk_on_termination    = var.delete_os_disk_on_termination
+  delete_data_disks_on_termination = var.delete_data_disks_on_termination
+
+  boot_diagnostics {
+    enabled     = var.boot_diagnostics_enabled
+    storage_uri = var.boot_diagnostics_storage_uri
+  }
   identity {
     type = var.identity_identity
   }
@@ -18,27 +25,25 @@ resource "azurerm_virtual_machine" "virtual_machine" {
     sku       = var.storage_image_reference_sku
     version   = var.storage_image_reference_version
   }
-
   plan {
-    name      = var.plan_name
     publisher = var.plan_publisher
     product   = var.plan_product
+    name      = var.plan_name
   }
 
   storage_os_disk {
-    name              = "osDisk"
-    caching           = "ReadWrite"
-    managed_disk_type = "Premium_LRS"
-    create_option     = "FromImage"
+    name              = var.storage_os_disk_name
+    managed_disk_type = var.storage_os_disk_managed_disk_type
+    create_option     = var.storage_os_disk_create_option
+    caching           = var.storage_os_disk_caching
   }
 
-  # Log data disks
   storage_data_disk {
-    name              = "fgtvmdatadisk"
-    managed_disk_type = "Premium_LRS"
-    create_option     = "Empty"
-    lun               = 0
-    disk_size_gb      = "30"
+    name              = var.storage_data_disk_name
+    managed_disk_type = var.storage_data_disk_managed_disk_type
+    create_option     = var.storage_data_disk_create_option
+    disk_size_gb      = var.storage_data_disk_disk_size_gb
+    lun               = var.storage_data_disk_lun
   }
 
   os_profile {
@@ -51,13 +56,7 @@ resource "azurerm_virtual_machine" "virtual_machine" {
   os_profile_linux_config {
     disable_password_authentication = false
   }
-
-  boot_diagnostics {
-    enabled     = true
-    storage_uri = var.boot_diagnostics_storage_uri
-  }
 }  
-
 
 output "virtual_machine" {
   value = azurerm_virtual_machine.virtual_machine
