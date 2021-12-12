@@ -1,6 +1,8 @@
 resource_group_name     = "jmcdonough-fortigate-single"
 resource_group_location = "eastus2"
 
+forti_manager_ip     = ""
+forti_manager_serial = ""
 public_ips = {
   "pip-fgt" = { name = "pip-fgt", allocation_method = "Static", sku = "Standard" }
 }
@@ -132,6 +134,13 @@ virtual_machines = {
 
     "vm_size" = "Standard_F4s"
 
+    connect_to_fmg  = "true"
+
+    license_type    = "flexvm"
+    license_file    = ""
+    serial_number   = ""
+    license_token   = ""
+
     "storage_image_reference_publisher" = "fortinet"
     "storage_image_reference_offer"     = "fortinet_fortigate-vm_v5"
     "storage_image_reference_sku"       = "fortinet_fg-vm"
@@ -156,23 +165,6 @@ virtual_machines = {
     storage_data_disk_create_option     = "Empty"
     storage_data_disk_disk_size_gb      = "30"
     storage_data_disk_lun               = "0"
-
-    #"fgt_license_file"    = "${var.fortinet_licenses["license_a"]}",
-    #"fgt_ha_priority"     = "255"
-    #"fgt_admins_port"     = "443"
-    #"fgt_license_type"    = var.vm_license
-    #"fgt_port1_ip"        = cidrhost(var.snet_address_ranges[0], 6)
-    #"fgt_port1_mask"      = cidrnetmask(var.snet_address_ranges[0])
-    #"fgt_port1_gateway"   = cidrhost(var.snet_address_ranges[0], 1)
-    #"fgt_port2_ip"        = cidrhost(var.snet_address_ranges[1], 6)
-    #"fgt_port2_mask"      = cidrnetmask(var.snet_address_ranges[1])
-    #"fgt_port2_gateway"   = cidrhost(var.snet_address_ranges[1], 1)
-    #"fgt_port3_ip"        = cidrhost(var.snet_address_ranges[2], 6)
-    #"fgt_port3_peerip"    = cidrhost(var.snet_address_ranges[2], 7)
-    #"fgt_port3_mask"      = cidrnetmask(var.snet_address_ranges[2])
-    #"fgt_port4_ip"        = cidrhost(var.snet_address_ranges[3], 6)
-    #"fgt_port4_mask"      = cidrnetmask(var.snet_address_ranges[3])
-    #"fgt_port4_gateway"   = cidrhost(var.snet_address_ranges[3], 1)
   }
 }
 

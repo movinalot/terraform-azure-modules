@@ -40,3 +40,6 @@ variable "boot_diagnostics_storage_uri" {}
 variable "identity_identity" {}
 variable "delete_data_disks_on_termination" {}
 variable "delete_os_disk_on_termination" {}
+
+variable "forti_manager_ip" {}
+variable "forti_manager_serial" {}

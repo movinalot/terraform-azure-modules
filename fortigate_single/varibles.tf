@@ -42,3 +42,13 @@ variable "network_interface_security_group_associations" {}
 variable "storage_accounts" {}
 
 variable "virtual_machines" {}
+
+variable "forti_manager_ip" {}
+variable "forti_manager_serial" {}
+variable "flexvm_config" {}
+variable "flexvm_program" {}
+variable "flexvm_api_user" {}
+variable "flexvm_api_pass" {}
+
+variable "license_token" {}
+variable "serial_number" {}

@@ -3,6 +3,9 @@ module "module_azure_virtual_machine" {
 
   source = "../azure/modules/azure_virtual_machine"
 
+  forti_manager_ip     = var.forti_manager_ip
+  forti_manager_serial = var.forti_manager_serial
+
   resource_group_location = module.module_azure_resource_group.resource_group.location
   resource_group_name     = module.module_azure_resource_group.resource_group.name
   name                    = each.value.name
@@ -51,6 +54,21 @@ module "module_azure_virtual_machine" {
   ]
 }
 
+resource "null_resource" "flexvm_create_reactivate" {
+    provisioner "local-exec" {
+    when    = create
+    command = "./flexvm_ops.sh ${var.flexvm_api_user} ${var.flexvm_api_pass} ${var.flexvm_program} ${var.flexvm_config} ${var.serial_number} ${var.flexvm_op}"
+  }
+}
+
+resource "null_resource" "flexvm_stop" {
+    provisioner "local-exec" {
+    when    = destroy
+    command = "./flexvm_ops.sh ${var.flexvm_api_user} ${var.flexvm_api_pass} ${var.flexvm_program} ${var.flexvm_config} ${var.serial_number} ${var.flexvm_op}"
+  }
+}
+
+
 output "virtual_machines" {
   value     = module.module_azure_virtual_machine[*]
   sensitive = true
@@ -67,11 +85,14 @@ data "template_file" "fgtvm" {
 
   template = file(each.value.config_template)
   vars = {
-    host_name     = each.value.name
-    type          = "flexvm"
-    license_file  = ""
-    serial_number = ""
-    license_token = ""
-    api_key       = random_string.random_apikey.id
+    host_name            = each.value.name
+    license_type         = each.value.license_type
+    connect_to_fmg       = each.value.connect_to_fmg
+    forti_manager_ip     = var.forti_manager_ip
+    forti_manager_serial = var.forti_manager_serial
+    license_file         = each.value.license_file
+    serial_number        = each.value.serial_number
+    license_token        = each.value.license_token
+    api_key              = random_string.random_apikey.id
   }
 }
