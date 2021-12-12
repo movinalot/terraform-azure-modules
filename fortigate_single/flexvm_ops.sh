@@ -1,14 +1,17 @@
 #!/bin/bash
 
+# John McDonough Fortinet
+# @movinalot
+
 FORTICARE_AUTH_URL="https://customerapiauth.fortinet.com/api/v1/oauth/token/"
 FLEXVM_BASE_URL="https://support.fortinet.com/ES/api/flexvm/v1"
 
 API_USERNAME=${1}
 API_PASSWORD=${2}
-PROGRAM_SERIAL=${3}
-CONFIG_NAME=${4}
-VM_SERIAL=${5}
-VM_OP=${6}
+PROGRAM_SERIAL=${3} # FlexVM Program Serial number to use when listing/creating/updating a VM
+CONFIG_NAME=${4}    # FlexVM Configuration to use when listing/creating/updating a VM
+VM_SERIAL=${5}      # if not specified then create a new VM Token and generate a new Serial number
+VM_OP=${6}          # VM OP choices are STOP, REACTIVATE (aka start), and TOKEN (generate a new token)
 
 flexvm_authenticate () {
 
