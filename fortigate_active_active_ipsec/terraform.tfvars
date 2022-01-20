@@ -1,65 +1,6 @@
 resource_group_name     = "jmcdonough-fortigate-active-active-ipsec"
 resource_group_location = "eastus2"
 
-forti_manager_ip     = ""
-forti_manager_serial = ""
-public_ips = {
-  "pip-fgt-v-lb-fe" = { name = "pip-fgt-v-lb-fe", allocation_method = "Static", sku = "Standard" }
-  "pip-fgt-a-ipsec" = { name = "pip-fgt-a-ipsec", allocation_method = "Static", sku = "Standard" }
-  "pip-fgt-b-ipsec" = { name = "pip-fgt-b-ipsec", allocation_method = "Static", sku = "Standard" }
-}
-
-virtual_networks = {
-  "vnet-fortigate-aa" = {
-    name          = "vnet-fortigate-aa"
-    address_space = ["10.225.0.0/16"]
-  }
-}
-
-subnets = {
-  "external"  = { name = "external", vnet_name = "vnet-fortigate-aa", address_prefixes = ["10.225.0.0/24"] }
-  "internal"  = { name = "internal", vnet_name = "vnet-fortigate-aa", address_prefixes = ["10.225.1.0/24"] }
-  "protected" = { name = "protected", vnet_name = "vnet-fortigate-aa", address_prefixes = ["10.225.2.0/24"] }
-}
-
-route_tables = {
-  "rt-protected" = { name = "rt-protected" }
-}
-
-routes = {
-  "r-default" = {
-    name                   = "r-default"
-    address_prefix         = "0.0.0.0/0"
-    next_hop_in_ip_address = "nic-fortigate_2"
-    next_hop_type          = "VirtualAppliance"
-    route_table_name       = "rt-protected"
-  }
-}
-
-subnet_route_table_associations = {
-  "subnet-protected" = {
-    subnet_id      = "protected"
-    route_table_id = "rt-protected"
-  }
-}
-
-storage_accounts = {
-  "st-diag" = {
-    name                     = "stdiag"
-    account_replication_type = "LRS"
-    account_tier             = "Standard"
-  }
-
-}
-
-network_interfaces = {
-  "nic-fortigate_a_1" = { name = "nic-fortigate_a_1", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "external", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "5", ip_configuration_public_ip_address_id = "pip-fgt-a-ipsec" }
-  "nic-fortigate_a_2" = { name = "nic-fortigate_a_2", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "internal", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "5", ip_configuration_public_ip_address_id = null }
-  "nic-fortigate_b_1" = { name = "nic-fortigate_b_1", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "external", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "6", ip_configuration_public_ip_address_id = "pip-fgt-b-ipsec" }
-  "nic-fortigate_b_2" = { name = "nic-fortigate_b_2", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "internal", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "6", ip_configuration_public_ip_address_id = null }
-
-}
-
 network_security_groups = {
   "nsg-public"  = { name = "nsg-public" }
   "nsg-private" = { name = "nsg-private" }
@@ -130,8 +71,8 @@ network_interface_security_group_associations = {
 
 virtual_machines = {
   "vm-fgt" = {
-    "name" = "vm-fgt",
-    "config_template" = "fgtvm.conf",
+    "name"              = "vm-fgt",
+    "config_template"   = "fgtvm.conf",
     "identity_identity" = "SystemAssigned",
 
     "network_interface_ids"        = ["nic-fortigate_1", "nic-fortigate_2"],
@@ -139,11 +80,11 @@ virtual_machines = {
 
     "vm_size" = "Standard_F4s"
 
-    connect_to_fmg  = ""
-    license_type    = ""
-    license_file    = ""
-    serial_number   = ""
-    license_token   = ""
+    connect_to_fmg = ""
+    license_type   = ""
+    license_file   = ""
+    serial_number  = ""
+    license_token  = ""
 
     "storage_image_reference_publisher" = "fortinet"
     "storage_image_reference_offer"     = "fortinet_fortigate-vm_v5"
