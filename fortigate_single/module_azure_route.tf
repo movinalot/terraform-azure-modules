@@ -1,5 +1,17 @@
+locals {
+  routes = {
+    "r-default" = {
+      name                   = "r-default"
+      address_prefix         = "0.0.0.0/0"
+      next_hop_in_ip_address = "nic-fortigate_2"
+      next_hop_type          = "VirtualAppliance"
+      route_table_name       = "rt-protected"
+    }
+  }
+}
+
 module "module_azure_route" {
-  for_each = var.routes
+  for_each = local.routes
 
   source = "../azure/modules/azure_route"
 

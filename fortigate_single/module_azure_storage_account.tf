@@ -1,10 +1,20 @@
+locals {
+  storage_accounts = {
+    "st-diag" = {
+      name                     = "stdiag"
+      account_replication_type = "LRS"
+      account_tier             = "Standard"
+    }
+  }
+}
+
 module "module_azure_storage_account" {
-  for_each = var.storage_accounts
+  for_each = local.storage_accounts
 
   source = "../azure/modules/azure_storage_account"
 
   resource_group_name      = module.module_azure_resource_group.resource_group.name
-  resource_group_location  = module.module_azure_resource_group.resource_group.location
+  location                 = module.module_azure_resource_group.resource_group.location
   name                     = format("%s%s", each.value.name, "${random_id.random_id.hex}")
   account_replication_type = each.value.account_replication_type
   account_tier             = each.value.account_tier

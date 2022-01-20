@@ -1,5 +1,58 @@
+locals {
+  network_security_rules = {
+    "nsr-public-ingress" = {
+      name                        = "nsr-public-ingress"
+      priority                    = 1001
+      direction                   = "Inbound"
+      access                      = "Allow"
+      protocol                    = "*"
+      source_port_range           = "*"
+      destination_port_range      = "*"
+      source_address_prefix       = "*"
+      destination_address_prefix  = "*"
+      network_security_group_name = "nsg-public"
+    },
+    "nsr-public-egress" = {
+      name                        = "nsr-public-egress"
+      priority                    = 1002
+      direction                   = "Outbound"
+      access                      = "Allow"
+      protocol                    = "*"
+      source_port_range           = "*"
+      destination_port_range      = "*"
+      source_address_prefix       = "*"
+      destination_address_prefix  = "*"
+      network_security_group_name = "nsg-public"
+    },
+    "nsr-private-ingress" = {
+      name                        = "nsr-private-ingress"
+      priority                    = 1003
+      direction                   = "Inbound"
+      access                      = "Allow"
+      protocol                    = "*"
+      source_port_range           = "*"
+      destination_port_range      = "*"
+      source_address_prefix       = "*"
+      destination_address_prefix  = "*"
+      network_security_group_name = "nsg-private"
+    },
+    "nsr-private-egress" = {
+      name                        = "nsr-private-egress"
+      priority                    = 1004
+      direction                   = "Outbound"
+      access                      = "Allow"
+      protocol                    = "*"
+      source_port_range           = "*"
+      destination_port_range      = "*"
+      source_address_prefix       = "*"
+      destination_address_prefix  = "*"
+      network_security_group_name = "nsg-private"
+    }
+  }
+}
+
 module "module_azure_network_security_rule" {
-  for_each = var.network_security_rules
+  for_each = local.network_security_rules
 
   source = "../azure/modules/azure_network_security_rule"
 

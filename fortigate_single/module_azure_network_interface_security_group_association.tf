@@ -1,5 +1,18 @@
+locals {
+  network_interface_security_group_associations = {
+    "nic-fortigate_1-nsg-public" = {
+      network_interface_id      = "nic-fortigate_1"
+      network_security_group_id = "nsg-public"
+    },
+    "nic-fortigate_2-nsg-public" = {
+      network_interface_id      = "nic-fortigate_2"
+      network_security_group_id = "nsg-private"
+    }
+  }
+}
+
 module "module_azure_network_interface_security_group_association" {
-  for_each = var.network_interface_security_group_associations
+  for_each = local.network_interface_security_group_associations
 
   source = "../azure/modules/azure_network_interface_security_group_association"
 

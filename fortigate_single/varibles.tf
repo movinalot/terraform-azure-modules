@@ -1,54 +1,48 @@
 variable "resource_group_name" {
-  description = "Azure Resource Group name"
+  description = "Resource Group name"
+  default     = ""
 }
+
 variable "resource_group_location" {
-  description = "Azure Resource Group location AKA region"
-}
-variable "public_ips" {
-  description = "Azure Public IPs"
+  description = "Resource Group location"
+  default     = ""
 }
 
-variable "virtual_networks" {
-  description = "Azure Virtual Networks"
+
+variable "forti_manager_ip" {
+  default     = ""
+}
+variable "forti_manager_serial" {
+  default     = ""
+}
+variable "flexvm_config" {
+  default     = ""
+}
+variable "flexvm_program" {
+  default     = ""
+}
+variable "flexvm_api_user" {
+  default     = ""
+}
+variable "flexvm_api_pass" {
+  default     = ""
+}
+variable "flexvm_op" {
+  default     = ""
 }
 
-variable "subnets" {
-  description = "Azure Virtual Network Subnets"
+variable "license_token" {
+  default     = ""
 }
-
-variable "route_tables" {
-  description = "Azure Route Tables"
+variable "license_type" {
+  default     = ""
 }
-variable "routes" {
-  description = "Azure Routes"
+variable "serial_number" {
+  default     = ""
 }
-
-variable "network_interfaces" {
-  description = "Azure Virtual Network Interfaces"
+variable "license_file" {
+  default     = ""
 }
-
-variable "network_security_groups" {
-  description = "Azure Virtual Network Security Groups"
+variable "connect_to_fmg" {
+  default     = ""
 }
-
-variable "network_security_rules" {
-  description = "Azure Virtual Network Security Rules"
-}
-
-variable "subnet_route_table_associations" {}
-
-variable "network_interface_security_group_associations" {}
-
-variable "storage_accounts" {}
-
-variable "virtual_machines" {}
-
-variable "forti_manager_ip" {}
-variable "forti_manager_serial" {}
-variable "flexvm_config" {}
-variable "flexvm_program" {}
-variable "flexvm_api_user" {}
-variable "flexvm_api_pass" {}
-
-variable "license_token" {}
-variable "serial_number" {}
