@@ -1,7 +1,8 @@
 resource "azurerm_network_interface" "network_interface" {
 
-  location                      = var.resource_group_location
-  resource_group_name           = var.resource_group_name
+  resource_group_name = var.resource_group_name
+  location            = var.location
+
   name                          = var.name
   enable_ip_forwarding          = var.enable_ip_forwarding
   enable_accelerated_networking = var.enable_accelerated_networking

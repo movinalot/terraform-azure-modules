@@ -1,10 +1,10 @@
 resource "azurerm_resource_group" "resource_group" {
 
-  name     = var.resource_group_name
-  location = var.resource_group_location
+  name     = var.name
+  location = var.location
 
   tags = {
-    environment = var.resource_group_name
+    environment = var.name
   }
 }
 

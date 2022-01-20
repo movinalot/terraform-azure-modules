@@ -1,7 +1,7 @@
 variable "network_interface_id" {
-  description = "Azure Network Interface ID"
+  description = "Network Interface ID"
 }
 
 variable "network_security_group_id" {
-  description = "Azure Security Group ID"
+  description = "Security Group ID"
 }

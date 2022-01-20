@@ -1,13 +1,13 @@
 variable "resource_group_name" {
-  description = "Azure Resource Group name"
+  description = "Resource Group name"
 }
 
-variable "resource_group_location" {
-  description = "Azure Resource Group location AKA region"
+variable "location" {
+  description = "Resource Group location"
 }
 
 variable "name" {
-  description = "Azure Network Security Group Name"
+  description = "Network Security Group Name"
 }
 
 variable "network_interface_ids" {}

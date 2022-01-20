@@ -1,8 +1,9 @@
 resource "azurerm_virtual_machine" "virtual_machine" {
 
-  name                = var.name
-  location            = var.resource_group_location
   resource_group_name = var.resource_group_name
+  location            = var.location
+
+  name = var.name
 
   network_interface_ids        = var.network_interface_ids
   primary_network_interface_id = var.primary_network_interface_id
@@ -56,7 +57,7 @@ resource "azurerm_virtual_machine" "virtual_machine" {
   os_profile_linux_config {
     disable_password_authentication = false
   }
-}  
+}
 
 output "virtual_machine" {
   value = azurerm_virtual_machine.virtual_machine

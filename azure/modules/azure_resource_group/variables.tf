@@ -1,6 +1,6 @@
-variable "resource_group_name" {
-  description = "Azure Resource Group name"
+variable "name" {
+  description = "Resource Group name"
 }
-variable "resource_group_location" {
-  description = "Azure Resource Group location AKA region"
+variable "location" {
+  description = "Resource Group location"
 }
