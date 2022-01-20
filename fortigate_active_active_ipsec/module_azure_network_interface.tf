@@ -1,10 +1,66 @@
 locals {
   network_interfaces = {
-    "nic-fortigate_a_1" = { name = "nic-fortigate_a_1", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "external", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "5", ip_configuration_public_ip_address_id = "pip-fgt-a-ipsec" }
-    "nic-fortigate_a_2" = { name = "nic-fortigate_a_2", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "internal", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "5", ip_configuration_public_ip_address_id = null }
-    "nic-fortigate_b_1" = { name = "nic-fortigate_b_1", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "external", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "6", ip_configuration_public_ip_address_id = "pip-fgt-b-ipsec" }
-    "nic-fortigate_b_2" = { name = "nic-fortigate_b_2", enable_ip_forwarding = true, enable_accelerated_networking = true, ip_configuration_name = "ipconfig1", ip_configuration_subnet_id = "internal", ip_configuration_private_ip_address_allocation = "Static", ip_configuration_private_ip_address_offset = "6", ip_configuration_public_ip_address_id = null }
+    "nic-fortigate_a_1" = {
+      name                          = "nic-fortigate_a_1"
+      enable_ip_forwarding          = true
+      enable_accelerated_networking = true
 
+      ip_configurations = [
+        {
+          name                          = "ipconfig1"
+          subnet_id                     = module.module_azure_subnet["external"].subnet.id
+          private_ip_address_allocation = "Static"
+          private_ip_address            = cidrhost(module.module_azure_subnet["external"].subnet.address_prefix, 5)
+          public_ip_address_id          = module.module_azure_public_ip["pip-fgt-a-ipsec"].public_ip.id
+        }
+      ]
+    }
+    "nic-fortigate_a_2" = {
+      name                          = "nic-fortigate_a_2"
+      enable_ip_forwarding          = true
+      enable_accelerated_networking = true
+
+      ip_configurations = [
+        {
+          name                          = "ipconfig1"
+          subnet_id                     = module.module_azure_subnet["internal"].subnet.id
+          private_ip_address_allocation = "Static"
+          private_ip_address            = cidrhost(module.module_azure_subnet["internal"].subnet.address_prefix, 5)
+          public_ip_address_id          = null
+        }
+      ]
+    }
+    "nic-fortigate_b_1" = {
+      name                          = "nic-fortigate_b_1"
+      enable_ip_forwarding          = true
+      enable_accelerated_networking = true
+      ip_configuration_name         = "ipconfig1"
+
+      ip_configurations = [
+        {
+          name                          = "ipconfig1"
+          subnet_id                     = module.module_azure_subnet["external"].subnet.id
+          private_ip_address_allocation = "Static"
+          private_ip_address            = cidrhost(module.module_azure_subnet["external"].subnet.address_prefix, 6)
+          public_ip_address_id          = module.module_azure_public_ip["pip-fgt-b-ipsec"].public_ip.id
+        }
+      ]
+    }
+    "nic-fortigate_b_2" = {
+      name                          = "nic-fortigate_b_2"
+      enable_ip_forwarding          = true
+      enable_accelerated_networking = true
+
+      ip_configurations = [
+        {
+          name                          = "ipconfig1"
+          subnet_id                     = module.module_azure_subnet["internal"].subnet.id
+          private_ip_address_allocation = "Static"
+          private_ip_address            = cidrhost(module.module_azure_subnet["internal"].subnet.address_prefix, 6)
+          public_ip_address_id          = null
+        }
+      ]
+    }
   }
 }
 
@@ -19,11 +75,7 @@ module "module_azure_network_interface" {
   enable_ip_forwarding          = each.value.enable_ip_forwarding
   enable_accelerated_networking = each.value.enable_accelerated_networking
 
-  ip_configuration_name                          = each.value.ip_configuration_name
-  ip_configuration_subnet_id                     = module.module_azure_subnet[each.value.ip_configuration_subnet_id].subnet.id
-  ip_configuration_private_ip_address_allocation = each.value.ip_configuration_private_ip_address_allocation
-  ip_configuration_private_ip_address            = cidrhost(module.module_azure_subnet[each.value.ip_configuration_subnet_id].subnet.address_prefixes[0], each.value.ip_configuration_private_ip_address_offset)
-  ip_configuration_public_ip_address_id          = each.value.ip_configuration_public_ip_address_id == null ? null : module.module_azure_public_ip[each.value.ip_configuration_public_ip_address_id].public_ip.id
+  ip_configurations = each.value.ip_configurations
 }
 
 output "network_interfaces" {

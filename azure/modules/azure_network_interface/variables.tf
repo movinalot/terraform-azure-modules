@@ -18,22 +18,6 @@ variable "enable_accelerated_networking" {
   description = "Virtual Network Interface enable_accelerated_networking"
 }
 
-variable "ip_configuration_name" {
-  description = "Virtual Network Interface ip_configuration_name"
-}
-
-variable "ip_configuration_subnet_id" {
-  description = "Virtual Network Interface ip_configuration_subnet_id"
-}
-
-variable "ip_configuration_private_ip_address_allocation" {
-  description = "Virtual Network Interface ip_configuration_private_ip_address_allocation"
-}
-
-variable "ip_configuration_private_ip_address" {
-  description = "Virtual Network Interface ip_configuration_private_ip_address"
-}
-
-variable "ip_configuration_public_ip_address_id" {
-  description = "Virtual Network Interface ip_configuration_public_ip_address_id"
+variable "ip_configurations" {
+  description = "Virtual Network Interface ip_configurations"
 }
