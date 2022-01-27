@@ -5,6 +5,8 @@ resource "azurerm_virtual_machine" "virtual_machine" {
 
   name = var.name
 
+  availability_set_id = var.availability_set_id
+
   network_interface_ids        = var.network_interface_ids
   primary_network_interface_id = var.primary_network_interface_id
   vm_size                      = var.vm_size
@@ -57,6 +59,8 @@ resource "azurerm_virtual_machine" "virtual_machine" {
   os_profile_linux_config {
     disable_password_authentication = false
   }
+
+  zones = var.zones
 }
 
 output "virtual_machine" {

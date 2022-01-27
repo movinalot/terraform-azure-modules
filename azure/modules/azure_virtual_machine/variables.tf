@@ -10,6 +10,7 @@ variable "name" {
   description = "Network Security Group Name"
 }
 
+variable "availability_set_id" { default = "" }
 variable "network_interface_ids" {}
 variable "primary_network_interface_id" {}
 variable "vm_size" {}
@@ -40,6 +41,8 @@ variable "boot_diagnostics_storage_uri" {}
 variable "identity_identity" {}
 variable "delete_data_disks_on_termination" {}
 variable "delete_os_disk_on_termination" {}
+
+variable "zones" {}
 
 variable "forti_manager_ip" {}
 variable "forti_manager_serial" {}
