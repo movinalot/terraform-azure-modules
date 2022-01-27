@@ -5,7 +5,7 @@ locals {
       address_prefix         = "0.0.0.0/0"
       next_hop_in_ip_address = module.module_azure_lb["internal_lb"].lb.private_ip_address
       next_hop_type          = "VirtualAppliance"
-      route_table_name       = "rt-protected"
+      route_table_name       = module.module_azure_route_table["rt-protected"].route_table.name
     }
   }
 }
