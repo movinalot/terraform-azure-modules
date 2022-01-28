@@ -1,8 +1,8 @@
 variable "resource_group_name" {
   description = "Resource Group name"
-  default = ""
+  default     = ""
 }
 variable "resource_group_location" {
   description = "Resource Group location"
-  default = ""
+  default     = ""
 }

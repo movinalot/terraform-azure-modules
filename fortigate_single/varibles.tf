@@ -10,39 +10,39 @@ variable "resource_group_location" {
 
 
 variable "forti_manager_ip" {
-  default     = ""
+  default = ""
 }
 variable "forti_manager_serial" {
-  default     = ""
+  default = ""
 }
 variable "flexvm_config" {
-  default     = ""
+  default = ""
 }
 variable "flexvm_program" {
-  default     = ""
+  default = ""
 }
 variable "flexvm_api_user" {
-  default     = ""
+  default = ""
 }
 variable "flexvm_api_pass" {
-  default     = ""
+  default = ""
 }
 variable "flexvm_op" {
-  default     = ""
+  default = ""
 }
 
 variable "license_token" {
-  default     = ""
+  default = ""
 }
 variable "license_type" {
-  default     = ""
+  default = ""
 }
 variable "serial_number" {
-  default     = ""
+  default = ""
 }
 variable "license_file" {
-  default     = ""
+  default = ""
 }
 variable "connect_to_fmg" {
-  default     = ""
+  default = ""
 }
