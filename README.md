@@ -1,2 +1,3 @@
 # terraform-azure-modules
-A modularized approach to Terraform for Azure 
+
+A modularized approach to Terraform for Azure
