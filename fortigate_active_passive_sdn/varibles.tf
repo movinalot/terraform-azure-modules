@@ -17,6 +17,24 @@ variable "virtual_network_address_space" {
   default = ""
 }
 
+variable "subnets" {
+  description = "Virtual Network Subnets"
+  type        = map(any)
+  default     = {
+    name     = "",
+    cidrsubnet_newbits = 0,
+    cidrsubnet_netnum = 0
+  }
+}
+
+variable "public_ips" {
+  description = "Public IPs"
+  type        = map(any)
+  default     = {
+    name     = ""
+  }
+}
+
 variable "image_publisher" {
   description = "Image Publisher"
   type = string

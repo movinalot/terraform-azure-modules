@@ -1,8 +1,8 @@
 locals {
   virtual_networks = {
-    "vnet" = {
+    (var.virtual_network_name) = {
       name          = var.virtual_network_name
-      address_space = ["172.16.136.0/22"]
+      address_space = [var.virtual_network_address_space]
     }
   }
 }
