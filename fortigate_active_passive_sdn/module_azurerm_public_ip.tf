@@ -11,7 +11,7 @@ locals {
     }
   }
   allocation_method = "Static"
-  sku = "Standard"
+  sku               = "Standard"
 
 }
 

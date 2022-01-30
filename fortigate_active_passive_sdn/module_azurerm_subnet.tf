@@ -1,6 +1,6 @@
 locals {
   subnets = {
-    (var.subnets["subnet_01"].name)  = {
+    (var.subnets["subnet_01"].name) = {
       name = var.subnets["subnet_01"].name
       address_prefixes = [cidrsubnet(
         module.module_azurerm_virtual_network[var.virtual_network_name].virtual_network.address_space[0],
@@ -8,7 +8,7 @@ locals {
         var.subnets["subnet_01"].cidrsubnet_netnum
       )]
     }
-    (var.subnets["subnet_02"].name)  = {
+    (var.subnets["subnet_02"].name) = {
       name = var.subnets["subnet_02"].name
       address_prefixes = [cidrsubnet(
         module.module_azurerm_virtual_network[var.virtual_network_name].virtual_network.address_space[0],
@@ -16,7 +16,7 @@ locals {
         var.subnets["subnet_02"].cidrsubnet_netnum
       )]
     }
-    (var.subnets["subnet_03"].name)  = {
+    (var.subnets["subnet_03"].name) = {
       name = var.subnets["subnet_03"].name
       address_prefixes = [cidrsubnet(
         module.module_azurerm_virtual_network[var.virtual_network_name].virtual_network.address_space[0],
@@ -24,7 +24,7 @@ locals {
         var.subnets["subnet_03"].cidrsubnet_netnum
       )]
     }
-    (var.subnets["subnet_04"].name)  = {
+    (var.subnets["subnet_04"].name) = {
       name = var.subnets["subnet_04"].name
       address_prefixes = [cidrsubnet(
         module.module_azurerm_virtual_network[var.virtual_network_name].virtual_network.address_space[0],
@@ -32,7 +32,7 @@ locals {
         var.subnets["subnet_04"].cidrsubnet_netnum
       )]
     }
-    (var.subnets["subnet_05"].name)  = {
+    (var.subnets["subnet_05"].name) = {
       name = var.subnets["subnet_05"].name
       address_prefixes = [cidrsubnet(
         module.module_azurerm_virtual_network[var.virtual_network_name].virtual_network.address_space[0],
