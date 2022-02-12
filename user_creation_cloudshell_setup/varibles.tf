@@ -17,3 +17,7 @@ variable "users" {
 variable "groups" {
   description = ""
 }
+
+variable "subscription_role_assignments" {
+  description = ""
+}

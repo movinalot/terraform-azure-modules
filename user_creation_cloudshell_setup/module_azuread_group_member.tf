@@ -1,15 +1,14 @@
-data "azuread_group" "group" {
-  display_name     = var.user_common["group_display_name"]
-  security_enabled = var.user_common["group_security_enabled"]
-}
-
 module "module_azuread_group_member" {
   for_each = var.users
 
   source = "../azure/ad/azuread_group_member"
 
-  group_object_id  = data.azuread_group.group.id
+  group_object_id  = module.module_azuread_group[var.user_common["group_display_name"]].group.id
   member_object_id = module.module_azuread_user[each.value.name].user.id
+
+  depends_on = [
+    module.module_azuread_group
+  ]
 }
 
 output "group_members" {
