@@ -1,20 +1,20 @@
 locals {
   virtual_machines = {
     "vm-fgt" = {
-      "name"              = "vm-fgt"
-      "config_template"   = "fgtvm.conf"
-      "identity_identity" = "SystemAssigned"
+      name              = "vm-fgt"
+      config_template   = "fgtvm.conf"
+      identity_identity = "SystemAssigned"
 
-      #"availability_set_id" = module.module_azurerm_availability_set["as_1"].subnet.id
-      "availability_set_id" = null
+      #availability_set_id = module.module_azurerm_availability_set["as_1"].subnet.id
+      availability_set_id = null
 
-      "delete_os_disk_on_termination"    = true
-      "delete_data_disks_on_termination" = true
+      delete_os_disk_on_termination    = true
+      delete_data_disks_on_termination = true
 
-      "network_interface_ids"        = [for nic in ["nic-fortigate_1", "nic-fortigate_2"] : module.module_azurerm_network_interface[nic].network_interface.id]
-      "primary_network_interface_id" = module.module_azurerm_network_interface["nic-fortigate_1"].network_interface.id
+      network_interface_ids        = [for nic in ["nic-fortigate_1", "nic-fortigate_2"] : module.module_azurerm_network_interface[nic].network_interface.id]
+      primary_network_interface_id = module.module_azurerm_network_interface["nic-fortigate_1"].network_interface.id
 
-      "vm_size" = "Standard_F4s"
+      vm_size = "Standard_F4s"
 
       connect_to_fmg = ""
       license_type   = ""
@@ -22,20 +22,21 @@ locals {
       serial_number  = ""
       license_token  = ""
 
-      "storage_image_reference_publisher" = "fortinet"
-      "storage_image_reference_offer"     = "fortinet_fortigate-vm_v5"
-      "storage_image_reference_sku"       = "fortinet_fg-vm"
-      "storage_image_reference_version"   = "7.0.3"
+      storage_image_reference_publisher = "fortinet"
+      storage_image_reference_offer     = "fortinet_fortigate-vm_v5"
+      storage_image_reference_sku       = "fortinet_fg-vm"
+      storage_image_reference_version   = "7.0.3"
 
-      "plan_name"                 = "fortinet_fg-vm"
-      "plan_publisher"            = "fortinet"
-      "plan_product"              = "fortinet_fortigate-vm_v5"
-      "os_profile_admin_username" = "azureuser"
-      "os_profile_admin_password" = "Password123!!"
+      plan_name                 = "fortinet_fg-vm"
+      plan_publisher            = "fortinet"
+      plan_product              = "fortinet_fortigate-vm_v5"
+      os_profile_admin_username = "azureuser"
+      os_profile_admin_password = "Password123!!"
 
-      "os_profile_linux_config_disable_password_authentication" = false
+      os_profile_linux_config_disable_password_authentication = false
+
       boot_diagnostics_enabled     = true
-      "boot_diagnostics_storage_uri"                            = module.module_azurerm_storage_account["st-diag"].storage_account.primary_blob_endpoint
+      boot_diagnostics_storage_uri = module.module_azurerm_storage_account["st-diag"].storage_account.primary_blob_endpoint
 
       storage_os_disk_name              = "osDisk"
       storage_os_disk_caching           = "ReadWrite"
