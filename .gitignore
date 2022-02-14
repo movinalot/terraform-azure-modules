@@ -31,4 +31,5 @@ override.tf.json
 .vscode
 backend.tf
 my_vars.cfg
+creds.sh
 *.tfvars*
