@@ -32,4 +32,4 @@ override.tf.json
 backend.tf
 my_vars.cfg
 creds.sh
-*.tfvars*
+terraform.tfvars

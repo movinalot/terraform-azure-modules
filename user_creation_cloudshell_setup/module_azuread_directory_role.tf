@@ -1,5 +1,5 @@
 module "module_azuread_directory_role" {
-  for_each = var.directory_roles
+  for_each = var.directory_role_assignments
 
   source = "../azure/ad/azuread_directory_role"
 
