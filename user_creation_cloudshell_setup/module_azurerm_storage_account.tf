@@ -5,7 +5,7 @@ module "module_azurerm_storage_account" {
 
   resource_group_name      = module.module_azurerm_resource_group[each.value.name].resource_group.name
   location                 = module.module_azurerm_resource_group[each.value.name].resource_group.location
-  name                     = format("%s%s", var.user_common["storage_prefix"], random_id.id[each.value.name].hex)
+  name                     = format("%s%s%s", var.user_common["storage_prefix"], each.value.name, random_id.id[each.value.name].hex)
   account_replication_type = var.user_common["storage_account_replication_type"]
   account_tier             = var.user_common["storage_account_tier"]
 }
