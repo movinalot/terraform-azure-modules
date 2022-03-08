@@ -2,7 +2,7 @@ locals {
   virtual_machines = {
     "vm-fgt" = {
       name              = "vm-fgt"
-      config_template   = "fgtvm.conf"
+      config_template   = "fortios_config.conf"
       identity_identity = "SystemAssigned"
 
       #availability_set_id = module.module_azurerm_availability_set["as_1"].subnet.id
@@ -13,14 +13,16 @@ locals {
 
       network_interface_ids        = [for nic in ["nic-fortigate_1", "nic-fortigate_2"] : module.module_azurerm_network_interface[nic].network_interface.id]
       primary_network_interface_id = module.module_azurerm_network_interface["nic-fortigate_1"].network_interface.id
-
+      public_ip_address            = module.module_azurerm_public_ip["pip-fgt"].public_ip.ip_address
+      
       vm_size = "Standard_F4s"
 
       connect_to_fmg = ""
-      license_type   = ""
+      license_type   = "flexvm"
       license_file   = ""
       serial_number  = ""
-      license_token  = ""
+      license_token  = "FE5614862677446686E4"
+
 
       storage_image_reference_publisher = "fortinet"
       storage_image_reference_offer     = "fortinet_fortigate-vm_v5"
@@ -88,7 +90,7 @@ module "module_azurerm_virtual_machine" {
   os_profile_computer_name  = each.value.name
   os_profile_admin_username = each.value.os_profile_admin_username
   os_profile_admin_password = each.value.os_profile_admin_password
-  os_profile_custom_data    = data.template_file.fgtvm[each.value.name].rendered
+  os_profile_custom_data    = data.template_file.config_files[each.value.name].rendered
 
 
   storage_os_disk_name                = each.value.storage_os_disk_name
@@ -109,12 +111,12 @@ module "module_azurerm_virtual_machine" {
   zones = each.value.zones
 }
 
-#resource "null_resource" "flexvm_create_reactivate" {
-#  provisioner "local-exec" {
-#    when    = create
-#    command = "./flexvm_ops.sh ${var.flexvm_api_user} ${var.flexvm_api_pass} ${var.flexvm_program} ${var.flexvm_config} ${var.serial_number} ${var.flexvm_op}"
-#  }
-#}
+resource "null_resource" "flexvm_create_reactivate" {
+  provisioner "local-exec" {
+    when    = create
+    command = "./flexvm_ops.sh ${var.flexvm_api_user} ${var.flexvm_api_pass} ${var.flexvm_program} ${var.flexvm_config} ${var.serial_number} ${var.flexvm_op}"
+  }
+}
 
 #resource "null_resource" "flexvm_stop" {
 #    provisioner "local-exec" {
@@ -124,26 +126,49 @@ module "module_azurerm_virtual_machine" {
 #}
 
 resource "random_string" "random_apikey" {
+
+  for_each = local.virtual_machines
+
   length  = 30
   special = false
 }
 
-data "template_file" "fgtvm" {
+data "template_file" "config_files" {
 
   for_each = local.virtual_machines
 
   template = file(each.value.config_template)
   vars = {
     host_name            = each.value.name
-    license_type         = var.license_type
-    connect_to_fmg       = var.connect_to_fmg
+    license_type         = each.value.license_type
+    connect_to_fmg       = each.value.connect_to_fmg
     forti_manager_ip     = var.forti_manager_ip
     forti_manager_serial = var.forti_manager_serial
-    license_file         = var.license_file
-    serial_number        = var.serial_number
-    license_token        = var.license_token
-    api_key              = random_string.random_apikey.id
+    license_file         = each.value.license_file
+    serial_number        = each.value.serial_number
+    license_token        = each.value.license_token
+    api_key              = random_string.random_apikey[each.value.name].id
   }
+}
+
+data "template_file" "files" {
+
+  for_each = local.virtual_machines
+
+  template = file("${path.module}/fortios_access.conf")
+  vars = {
+    fortios_access_hostname = each.value.public_ip_address
+    fortios_access_token    = random_string.random_apikey[each.value.name].id
+    fortios_insecure        = "true"
+  }
+}
+
+resource "local_file" "files" {
+
+  for_each = local.virtual_machines
+
+  filename = "${path.module}/fortios_access_${each.value.name}.sh"
+  content  = data.template_file.files[each.value.name].rendered
 }
 
 output "virtual_machines" {
